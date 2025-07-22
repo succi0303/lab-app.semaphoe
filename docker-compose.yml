@@ -1,0 +1,24 @@
+services:
+  # uncomment this section and comment out the mysql section to use postgres instead of mysql
+  postgres:
+    restart: unless-stopped
+    image: postgres:14
+    hostname: postgres
+    volumes: 
+      - semaphore-postgres:/var/lib/postgresql/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    env_file: stack.env
+  semaphore:
+    restart: unless-stopped
+    ports:
+      - 3000:3010
+    image: semaphoreui/semaphore:latest
+    env_file: stack.env
+    depends_on:
+      - postgres # for postgres, change to: postgres
+    voflumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+volumes:
+  semaphore-postgres: # to use postgres, switch to: semaphore-postgres
