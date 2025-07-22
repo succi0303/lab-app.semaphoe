@@ -6,8 +6,6 @@ services:
     hostname: postgres
     volumes: 
       - semaphore-postgres:/var/lib/postgresql/data
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
     env_file: stack.env
   semaphore:
     restart: unless-stopped
@@ -17,8 +15,5 @@ services:
     env_file: stack.env
     depends_on:
       - postgres # for postgres, change to: postgres
-    voflumes:
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
 volumes:
   semaphore-postgres: # to use postgres, switch to: semaphore-postgres
